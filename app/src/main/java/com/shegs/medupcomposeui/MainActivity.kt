@@ -29,5 +29,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MedComposeUIPreview() {
     MedUpComposeUITheme {
+        HomeScreen() 
     }
 }
