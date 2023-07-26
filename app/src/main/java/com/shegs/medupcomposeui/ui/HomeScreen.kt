@@ -76,7 +76,7 @@ fun HomeScreen(){
             .background(DeepBlue)
     ){
         Column {
-            GreetingSection(greet = GreetingFunction())
+            GreetingSection(greet = GreetingFunction(), compliment = GreetingFunction())
             ChipSection(chips = listOf("Sweet Sleep", "Imsonia", "Depression"))
             CurrentVideoSection()
             FeatureSection(features = listOf(
@@ -124,14 +124,16 @@ fun HomeScreen(){
 fun GreetingSection(
     name: String = "Shegs",
     greet: GreetingFunction,
-    
+    compliment: GreetingFunction,
 ){
 
-    var greeting by remember { mutableStateOf("Good Morning") }
+    var greetingText by remember { mutableStateOf("Good Morning") }
+    var complimentText by remember { mutableStateOf("We wish you have a good day!") }
 
     LaunchedEffect(true){
+        complimentText = compliment.getComplimentText()
         while (true){
-            greeting = greet.getGreetingText()
+            greetingText = greet.getGreetingText()
             delay(60000)
         }
     }
@@ -147,11 +149,11 @@ fun GreetingSection(
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = "$greeting, $name",
+                text = "$greetingText, $name",
                 style = MaterialTheme.typography.headlineSmall
             )
             Text(
-                text = "We wish you have a good day!",
+                text = "$complimentText",
                 style = MaterialTheme.typography.bodyMedium
             )
         }
