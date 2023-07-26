@@ -24,6 +24,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -41,6 +42,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.shegs.medupcomposeui.BottomMenuContent
 import com.shegs.medupcomposeui.Feature
+import com.shegs.medupcomposeui.GreetingFunction
 import com.shegs.medupcomposeui.R
 import com.shegs.medupcomposeui.standardQuadFromTo
 import com.shegs.medupcomposeui.ui.theme.AquaBlue
@@ -61,6 +63,8 @@ import com.shegs.medupcomposeui.ui.theme.OrangeYellow1
 import com.shegs.medupcomposeui.ui.theme.OrangeYellow2
 import com.shegs.medupcomposeui.ui.theme.OrangeYellow3
 import com.shegs.medupcomposeui.ui.theme.TextWhite
+import kotlinx.coroutines.delay
+import java.util.Calendar
 
 
 @Composable
@@ -72,7 +76,7 @@ fun HomeScreen(){
             .background(DeepBlue)
     ){
         Column {
-            GreetingSection()
+            GreetingSection(greet = GreetingFunction())
             ChipSection(chips = listOf("Sweet Sleep", "Imsonia", "Depression"))
             CurrentVideoSection()
             FeatureSection(features = listOf(
@@ -117,7 +121,21 @@ fun HomeScreen(){
 }
 
 @Composable
-fun GreetingSection(name: String = "Shegs"){
+fun GreetingSection(
+    name: String = "Shegs",
+    greet: GreetingFunction,
+    
+){
+
+    var greeting by remember { mutableStateOf("Good Morning") }
+
+    LaunchedEffect(true){
+        while (true){
+            greeting = greet.getGreetingText()
+            delay(60000)
+        }
+    }
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -129,7 +147,7 @@ fun GreetingSection(name: String = "Shegs"){
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = "Good Morning, $name",
+                text = "$greeting, $name",
                 style = MaterialTheme.typography.headlineSmall
             )
             Text(
