@@ -11,15 +11,16 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -31,6 +32,7 @@ import com.shegs.medupcomposeui.R
 import com.shegs.medupcomposeui.ui.theme.ButtonBlue
 import com.shegs.medupcomposeui.ui.theme.DarkerButtonBlue
 import com.shegs.medupcomposeui.ui.theme.DeepBlue
+import com.shegs.medupcomposeui.ui.theme.LightRed
 import com.shegs.medupcomposeui.ui.theme.TextWhite
 
 @Composable
@@ -44,6 +46,7 @@ fun HomeScreen(){
         Column {
             GreetingSection()
             ChipSection(chips = listOf("Sweet Sleep", "Imsonia", "Depression"))
+            CurrentVideoSection()
         }
     }
 }
@@ -89,14 +92,14 @@ fun ChipSection(chips: List<String>){
             Box(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
-                .padding(start = 15.dp, top = 15.dp, bottom = 15.dp)
-                .clickable { selectedChipIndex = it }
-                .clip(RoundedCornerShape(10.dp))
-                .background(
-                    if (selectedChipIndex == it) ButtonBlue
-                    else DarkerButtonBlue
-                )
-                .padding(15.dp)
+                    .padding(start = 15.dp, top = 15.dp, bottom = 15.dp)
+                    .clickable { selectedChipIndex = it }
+                    .clip(RoundedCornerShape(10.dp))
+                    .background(
+                        if (selectedChipIndex == it) ButtonBlue
+                        else DarkerButtonBlue
+                    )
+                    .padding(15.dp)
             ) {
                 Text(
                     text = chips[it],
@@ -108,13 +111,58 @@ fun ChipSection(chips: List<String>){
 }
 
 
+@Composable
+fun CurrentVideoSection(
+    color: Color = LightRed
+){
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 15.dp, vertical = 20.dp)
+            .clip(RoundedCornerShape(10.dp))
+            .background(color),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Column() {
+            Text(
+                text = "Daily Thought",
+                style = MaterialTheme.typography.headlineSmall
+            )
+            Text(
+                text = "Meditation -- 3-10 mins",
+                style = MaterialTheme.typography.bodyMedium,
+                color = TextWhite
+            )
+        }
+
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .size(40.dp)
+                .clip(CircleShape)
+                .background(ButtonBlue)
+                .padding(10.dp)
+        ){
+            Icon(
+                painter = painterResource(id = R.drawable.ic_play),
+                contentDescription = "Play button",
+                tint = Color.White,
+                modifier = Modifier.size(16.dp)
+            )
+        }
+
+    }
+
+}
+
 
 
 
 @Preview (showBackground = false)
 @Composable
 fun HomeScreenPreview(){
-    ChipSection(chips = listOf("Sweet Sleep", "Imsonia", "Depression"))
+    HomeScreen()
 }
 
 
