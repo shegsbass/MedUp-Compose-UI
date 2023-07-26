@@ -175,7 +175,8 @@ fun CurrentVideoSection(
             .fillMaxWidth()
             .padding(horizontal = 15.dp, vertical = 20.dp)
             .clip(RoundedCornerShape(10.dp))
-            .background(color),
+            .background(color)
+            .padding(15.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
